@@ -30,9 +30,10 @@ jobs:
 
       - name: Set up dbt profile + private key
         run: |
+          test -n "$DBT_PRIVATE_KEY"
           mkdir -p ~/.dbt
           cp .dbt/profiles.yml ~/.dbt/profiles.yml
-          echo "$DBT_PRIVATE_KEY" > ~/.dbt/rsa_key.p8
+          printf '%s' "$DBT_PRIVATE_KEY" > ~/.dbt/rsa_key.p8
           chmod 600 ~/.dbt/rsa_key.p8
 
       - name: Install dbt deps

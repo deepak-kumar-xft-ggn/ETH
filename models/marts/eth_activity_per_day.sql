@@ -9,5 +9,3 @@ from {{ ref('stg_transactions_enriched') }}
 
 group by 
 date
-
-{{ random_macro() }}
