@@ -27,6 +27,7 @@ dbt compile, and exists to keep SQLFluff happy. */
         {% endif %}
     {%- else -%}
         {%- for col in cols %}
+        {% set col = col | lower %}
             {%- if relation_alias %}{{ relation_alias }}.{% else %}{%- endif -%}
                 {%- if quote_identifiers -%}
                     {{ adapter.quote(col)|trim }} {%- if prefix!='' or suffix!='' %} as {{ adapter.quote(prefix ~ col ~ suffix)|trim }} {%- endif -%}
