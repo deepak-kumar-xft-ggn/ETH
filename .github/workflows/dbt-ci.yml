@@ -55,7 +55,7 @@ jobs:
           dbt parse --target prod
           cp target/manifest.json /tmp/master-manifest.json
           cd $GITHUB_WORKSPACE
-          git worktree remove /tmp/master-worktree
+          git worktree remove --force /tmp/master-worktree
           mkdir -p state
           cp /tmp/master-manifest.json state/manifest.json
 
