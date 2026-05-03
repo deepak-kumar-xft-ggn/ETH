@@ -49,12 +49,15 @@ jobs:
 
       - name: Create state manifest from master
         run: |
+          git stash --include-untracked
           git checkout master
           dbt deps
           dbt parse --target prod
-          mkdir -p state
-          cp target/manifest.json state/manifest.json
+          cp target/manifest.json /tmp/master-manifest.json
           git checkout -
+          git stash pop || true
+          mkdir -p state
+          cp /tmp/master-manifest.json state/manifest.json
 
       # ---- Clone incrementals first (so is_incremental() is true) ----
       - name: Clone impacted incremental models into PR schema
