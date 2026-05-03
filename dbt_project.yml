@@ -23,10 +23,6 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 flags: { fail_fast: true }
-
-
-seeds:
-  +schema: CI_SCHEMA
   
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
