@@ -49,13 +49,13 @@ jobs:
 
       - name: Create state manifest from master
         run: |
-          git stash --include-untracked
-          git checkout master
+          git worktree add /tmp/master-worktree master
+          cd /tmp/master-worktree
           dbt deps
           dbt parse --target prod
           cp target/manifest.json /tmp/master-manifest.json
-          git checkout -
-          git stash pop || true
+          cd $GITHUB_WORKSPACE
+          git worktree remove /tmp/master-worktree
           mkdir -p state
           cp /tmp/master-manifest.json state/manifest.json
 
