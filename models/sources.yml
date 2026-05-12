@@ -3,12 +3,13 @@ version: 2
 
 sources:
   - name: eth
+    description: here is my ETH source
     database: eth  
-    schema: eth_schema
-
+    schema: eth_schema  
     tables:
       - name: contracts
+        description: this is my contracts table
       - name: contracts_clone
-        identifier: cnt
       - name: token_transfers
       - name: transactions
+

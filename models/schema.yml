@@ -2,8 +2,14 @@ version: 2
 
 
 models:
+  - name: stg_transactions_enriched
+    columns:
+      - name: value
+        data_tests:
+          - assert_value_amount_positive
+
   - name: stg_transactions
-    description: Transactions in the Ethereum Blockchain
+    description: "{{ doc('transactions') }}"
     columns:
       - name: hash
         description: >
@@ -14,11 +20,12 @@ models:
           - not_null
 
 
-
   - name: stablecoin_activity_per_day
+    latest_version: 2
     config:
       contract:
         enforced: true
+        alias_types: false
     columns:
       - name: date
         data_type: date
@@ -31,6 +38,10 @@ models:
       - name: type
         data_type: varchar
         description: ""
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Hybrid', 'Crypto-backed', 'Fiat-backed']
 
       - name: symbol
         data_type: varchar
@@ -39,4 +50,32 @@ models:
       - name: total_usd_value
         data_type: float
         description: ""
-	  
+    
+    versions:
+    
+      - v: 2
+        config:
+          alias: stablecoin_activity_per_day
+        columns:
+          - include: all
+
+
+unit_tests:
+  - name: test_is_valid_transaction_category_breakdown
+    model: stg_transactions_enriched
+    overrides:
+      macros:
+        # unit test this model in "full refresh" mode
+        is_incremental: false 
+    given:
+      - input: ref('stg_transactions')
+        rows:
+          - {receipt_contract_address: 'bla'}
+
+      - input: ref('stg_token_transfers')
+        rows:
+          - {transaction_hash: 'bla'}
+
+    expect:
+      rows:
+        - {transaction_category: 'contract_creation'}
