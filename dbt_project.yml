@@ -50,6 +50,8 @@ vars:
   token_decimals_var: '18'
 
 
+#this is for merge conflict
+
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['eth', 'dbt_utils']
