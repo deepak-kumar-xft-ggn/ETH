@@ -52,10 +52,11 @@ jobs:
           git clean -fd
           git checkout master
           dbt deps
-          dbt parse --target ci
-          mkdir -p state
-          cp target/manifest.json state/manifest.json
+          dbt parse --target prod
+          cp target/manifest.json /tmp/master_manifest.json
           git checkout -
+          mkdir -p state
+          cp /tmp/master_manifest.json state/manifest.json
     
       # ---- Clone incrementals first (so is_incremental() is true) ----
       - name: Clone impacted incremental models into PR schema
