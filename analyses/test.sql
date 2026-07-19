@@ -1,4 +1,2 @@
-select
-		{{ dbt_utils.star(from = ref('stg_transactions_enriched'), except =['new_field'], quote_identifiers = False) }}
-
-from {{ ref('stg_transactions_enriched') }}
+		
+		{{ codegen.generate_model_yaml(['stablecoin_activity_per_day']) }}
