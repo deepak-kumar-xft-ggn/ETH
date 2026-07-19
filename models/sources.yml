@@ -5,11 +5,10 @@ sources:
     quoting:
       database: true
       schema: true
-    database: eth  
-    schema: eth_schema
+    database: ETH
+    schema: ETH_SCHEMA
 
     tables:
       - name: contracts
-        identifier: cnt
       - name: token_transfers
       - name: transactions

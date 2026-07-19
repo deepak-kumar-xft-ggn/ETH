@@ -27,6 +27,9 @@ seeds:
   +database: seeds
   +schema: static
 
+
+flags:
+  fail_fast: true
   
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -43,6 +46,18 @@ models:
         - powerbi
         - report
       +schema: marts 
+
+      analytics:
+        stablecoin_activity_per_day:
+          +post-hook:
+            - GRANT USAGE ON DATABASE DBT TO ROLE TESTER;
+            - GRANT USAGE ON SCHEMA DBT.DBT_DEEPAK_marts TO ROLE TESTER;
+            - GRANT USAGE ON DATABASE DBT TO ROLE BA;
+            - GRANT USAGE ON SCHEMA DBT.DBT_DEEPAK_marts TO ROLE BA;
+            - "{{ create_latest_version_view() }}"
+          +grants:
+            select: []
+
 
 vars:
   token_name_var: 'link'
