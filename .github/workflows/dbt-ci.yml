@@ -49,6 +49,7 @@ jobs:
 
       - name: Create state manifest from master
         run: |
+          rm -rf state/
           git checkout master
           dbt deps
           dbt parse --target prod
