@@ -52,7 +52,7 @@ jobs:
           git clean -fd
           git checkout master
           dbt deps
-          dbt parse --target prod
+          dbt parse --target ci
           mkdir -p state
           cp target/manifest.json state/manifest.json
           git checkout -
