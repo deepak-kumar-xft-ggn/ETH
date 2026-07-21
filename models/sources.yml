@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: eth
+    description: here is my ETH source
     quoting:
       database: true
       schema: true
@@ -10,5 +11,11 @@ sources:
 
     tables:
       - name: contracts
+        description: this is my contracts table
       - name: token_transfers
       - name: transactions
+      - name: contracts_clone
+        columns:
+          - name: hash
+            data_tests:
+              - unique
